@@ -7,3 +7,33 @@ output: html_document
 
 #We are going to be learning ggplot2: Excited!
 
+install.packages("tidyverse")
+
+library(tidyverse)
+
+library(dplyr)
+
+#National Parks in California
+ca <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/ca.csv") 
+
+#Acadia National Park
+acadia <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/acadia.csv")
+
+#Southeast US National Parks
+se <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/se.csv")
+
+#2016 Visitation for all Pacific West National Parks
+visit_16 <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/visit_16.csv")
+
+#All Nationally designated sites in Massachusetts
+mass <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/mass.csv")
+
+
+#Sample of ca data
+head(ca)
+dim(ca)
+
+library(ggplot2)
+
+ggplot(data = ca) +
+geom_point(aes( x = year, y = visitors))
