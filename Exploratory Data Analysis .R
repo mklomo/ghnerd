@@ -59,6 +59,93 @@ ggsave("Playing with the bins.pdf")
 
 
 #Height Examination of US Women
+us_data <- read_csv("US_sample_data.csv")
+
+head(us_data)
+
+#Filtering for Adult Women
+us_data_women_trunc <- filter(us_data, adult == 1, female == 1, height_cm < 200, height_cm > 120)
+
+ggplot(us_data_women_trunc, aes(height_cm))+
+  geom_histogram(color = "Black", fill = "red")+
+  xlab("Height in cm of US Women")
+
+ggsave("Height of US Women.pdf")
+
+#Kernel Density Estimation
+ggplot(us_data_women_trunc, aes(height_cm))+
+  geom_histogram(aes(height_cm, ..density..), fill = "white", color = "darkred")+
+  geom_density(kernel = "gaussian")
+
+ggsave("US Kernel.pdf")
+
+
+#Playing with Bandwidth
+US_1 <- ggplot(us_data_women_trunc, aes(height_cm))+
+  geom_histogram(aes(height_cm, ..density..), fill = "white", color = "darkred")+
+  geom_density(kernel = "gaussian", bw=1)+
+  xlab("bw=1")
+
+#Playing with Bandwidth
+US_1 <- ggplot(us_data_women_trunc, aes(height_cm))+
+  geom_histogram(aes(height_cm, ..density..), fill = "white", color = "darkred")+
+  geom_density(kernel = "gaussian", bw=1)+
+  xlab("bw=1")
+
+US_2 <- ggplot(us_data_women_trunc, aes(height_cm))+
+  geom_histogram(aes(height_cm, ..density..), fill = "white", color = "darkred")+
+  geom_density(kernel = "gaussian", bw=5)+
+  xlab("bw=5")
+
+US_3 <- ggplot(us_data_women_trunc, aes(height_cm))+
+  geom_histogram(aes(height_cm, ..density..), fill = "white", color = "darkred")+
+  geom_density(kernel = "gaussian", bw=10)+
+  xlab("bw=10")
+
+US_4 <- ggplot(us_data_women_trunc, aes(height_cm))+
+  geom_histogram(aes(height_cm, ..density..), fill = "white", color = "darkred")+
+  geom_density(kernel = "gaussian", bw=20)+
+  xlab("bw=20")
+
+plot_grid(US_1, US_2, US_3, US_4, labels = "Kernel Desity with Different Binwidths", hjust = -1, vjust = 0.2)
+ggsave("Bnadwidth effect on Kernel using US data.pdf")
+
+
+
+#Combining the 2 histograms
+ggplot(bihar_data_females_trunc, aes(height_cm))+
+  geom_histogram(fill = "blue", color ="darkblue")+
+  geom_histogram(data = us_data_women_trunc, aes(height_cm), fill = "red", color = "darkred")
+#makes no sense to do as count. Because sample size distorts the essence of the data shown
+
+
+#more visible as points
+ggplot(bihar_data_females_trunc, aes(height_cm))+
+  geom_freqpoly(fill = "blue", color ="darkblue")+
+  geom_freqpoly(data = us_data_women_trunc, aes(height_cm), fill = "red", color = "darkred")+
+  xlab("Height in cm")
+
+ggsave("compare_histograms.pdf")
+
+#Comparing with CDF
+ggplot(bihar_data_females_trunc, aes(height_cm))+
+  stat_ecdf(color = "darkblue")+
+  stat_ecdf(data = us_data_women_trunc, aes(height_cm), color = "darkred")+
+  xlab("Height in centimeters")
+
+ggsave("CDF graphs on data.pdf")
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
